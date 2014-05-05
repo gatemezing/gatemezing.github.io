@@ -1,3 +1,3 @@
-gatemezing.github.io
+License Checker tool demo
 ====================
 DEMO of License checker tool.
