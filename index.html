@@ -21,15 +21,9 @@
   
   <!--quelques scripts utiles-->
   <script src="js/sparql.js"></script>
-  <script src="js/askQueries.js"></script>
   <script src="js/utils.js"></script>
- 
-   <!--<script src="../assets/js/analyse.js"</script> -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
-  <script src="https://yui.yahooapis.com/3.4.1/build/yui/yui-min.js"></script>
-  <script src="js/gallery-storage-lite.js"></script>
- 
-  
+
 
   </head>
 
@@ -364,39 +358,17 @@
   		checker($('#input_endpoint').val());
 	 
    e.preventDefault();
-  // e.preventDefault();
-  
-  // YUI storage mechanism
-  YUI({
-    //Last Gallery Build of this module
-    gallery: 'gallery-2013.01.16-21-05'
-}).use('gallery-storage-lite',  function (Y) {
- 
-    // For full compatibility with IE 6-7 and Safari 3.x, you should listen for
-    // the storage-lite:ready event before making storage calls. If you're not
-    // targeting those browsers, you can safely ignore this step.
-    Y.StorageLite.on('storage-lite:ready', function () {
-          // To store an item, pass a key and a value (both strings) to setItem().
-        
-		   url = Y.one('#input_endpoint');
-       g = Y.one('#input_graph') ;
-        // To store an item, pass a key and a value (both strings) to setItem().
-        Y.StorageLite.setItem('endpoint', $('#input_endpoint').val(), true);
-        Y.StorageLite.setItem('graph', $('#input_graph').val(), true);
-      //alert(localStorage.endpoint);
-	  
-    });
- 
- //$('#btn_checker').hide();
-  
-});  
+
+  localStorage.setItem('endpoint', $('#input_endpoint').val());
+  localStorage.setItem('graph', $('#input_graph').val());
+
  return false
  });
  
 
  $("#form_license").on('submit' , function(e) {
 
-      listVocab(localStorage.endpoint.slice(1, -1), $('#input_graph').val());
+      listVocab(localStorage.getItem('endpoint'), $('#input_graph').val());
    
    e.preventDefault();
   // return false ;
@@ -405,7 +377,7 @@
 // action form checker
  $("#btn_checker").on('click' , function(e) {
      // alert(localStorage.graph.slice(1, -1));
-      listLicense(localStorage.endpoint.slice(1, -1), $('#input_graph').val());
+      listLicense(localStorage.getItem('endpoint'), $('#input_graph').val());
    
    e.preventDefault();
   // return false ;
@@ -413,7 +385,7 @@
  
  $("#btn_Domainchecker").on('click' , function(e) {
      // alert(localStorage.graph.slice(1, -1));
-      listDomainLicense(localStorage.endpoint.slice(1, -1), $('#input_graph').val());
+      listDomainLicense(localStorage.getItem('endpoint'), $('#input_graph').val());
    
    e.preventDefault();
   // return false ;
