@@ -18,14 +18,19 @@ function sparqlQuery(query, baseURL, format) {
   else {
   	xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
   }
-  //TODO: catch the error of the URIs here
-  xmlhttp.open("GET",queryURL,false);
-  
-  xmlhttp.send();
-  
-  return JSON.parse(xmlhttp.responseText);
-  
-  
+  var emptyResult = {results: {bindings: []}};
+  try {
+    xmlhttp.open("GET",queryURL,false);
+    xmlhttp.send();
+    if (xmlhttp.status < 200 || xmlhttp.status >= 300) {
+      console.error("Sparql query failed: " + queryURL + " (status " + xmlhttp.status + ")");
+      return emptyResult;
+    }
+    return JSON.parse(xmlhttp.responseText);
+  } catch (e) {
+    console.error("Sparql query error: " + queryURL, e);
+    return emptyResult;
+  }
 }
 
 

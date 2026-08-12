@@ -69,7 +69,8 @@ function checkDomainLicense(vocabURI){
 	var lovendpoint= "http://eventmedia.eurecom.fr/sparql"; //set now to be eventmedia
 	//var license = "license";
 	var vocabstring = vocabURI.toString();
-	vocabstring = vocabstring.substring(11, 16); //better split here 
+	var domainMatch = vocabstring.match(/^https?:\/\/([^\/]+)/);
+	vocabstring = domainMatch ? domainMatch[1] : vocabstring;
 	//var query ="PREFIX voaf:<http://purl.org/vocommons/voaf#> SELECT DISTINCT ?v ?l WHERE { ?v ?p ?l . ?v a voaf:Vocabulary. ?p rdfs:label ?pname. FILTER (contains(str(?pname),"+'"'+license+'"'+")) FILTER (contains(str(?v), "+'"'+vocabstring+'"'+ "))} ORDER BY ?l";
     var query ="PREFIX voaf:<http://purl.org/vocommons/voaf#>select distinct ?v ?l from <http://lov.okfn.org> where { ?v ?p ?l. ?v a voaf:Vocabulary. filter (?p !=rdf:type) filter (contains(str(?v), "+'"' +vocabstring+'"'+ "))}";
     var json=sparqlQuery(query, lovendpoint); 
